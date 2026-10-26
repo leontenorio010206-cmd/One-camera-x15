@@ -156,8 +156,10 @@ class MainActivity : ComponentActivity() {
     private fun dp(v: Int) = (v * resources.displayMetrics.density).toInt()
     private fun action(container: LinearLayout, text: String, weight: Float,
         click: () -> Unit): Button {
-        val b = Button(this).apply { this.text = text; isAllCaps = false; setOnClickListener { click() } }
-        container.addView(b, LinearLayout.LayoutParams(0, -2, weight))
+        val b = Button(this).apply { this.text = text; setAllCaps(false); setOnClickListener { click() } }
+        container.addView(b, if (container.orientation == LinearLayout.HORIZONTAL)
+            LinearLayout.LayoutParams(0, -2, weight)
+        else LinearLayout.LayoutParams(-1, -2))
         return b
     }
     private fun slider(label: String, value: Int): SeekBar {
